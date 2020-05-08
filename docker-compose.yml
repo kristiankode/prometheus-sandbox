@@ -1,0 +1,40 @@
+version: '3.7'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+
+services:
+
+    prometheus:
+        image: prom/prometheus:latest
+        volumes: 
+            - ./prometheus/:/etc/prometheus/
+            - prometheus_data:/prometheus
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+        ports:
+            - 9090:9090
+        restart: always
+    
+    grafana:
+        image: grafana/grafana
+        user: "472"
+        depends_on: 
+            - prometheus
+        ports: 
+            - 8080:3000
+        volumes:
+            - grafana_data:/var/lib/grafana
+        env_file:
+            - ./grafana/config.monitoring
+        restart: always
+
+    app:
+        image: kristianh/swagger-stats-demo
+        ports: 
+            - 3000:3000
+        restart: always
+
+    
