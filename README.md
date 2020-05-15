@@ -1,4 +1,4 @@
-Project for trying out prometheus. 
+Project for trying out prometheus and grafana. 
 
 Start with `docker-compose up`.
 - Prometheus: http://localhost:9090
@@ -7,7 +7,6 @@ Start with `docker-compose up`.
 
 ## Grafana
 Grafana can connect to prometheus on url `http://prometheus:9090`
-
 
 ## PromQL
 Query for getting error percentage for web app:
